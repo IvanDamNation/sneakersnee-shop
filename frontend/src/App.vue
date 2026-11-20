@@ -5,9 +5,14 @@ import {
   ClipboardDocumentListIcon,
   HeartIcon,
   MagnifyingGlassIcon,
+  MoonIcon,
   ShoppingBagIcon,
+  SunIcon,
 } from '@heroicons/vue/24/outline'
 import { ShoppingCartIcon } from '@heroicons/vue/24/solid'
+import { useTheme } from '@/composables/useTheme'
+
+const { isDark, toggleTheme } = useTheme()
 </script>
 
 <template>
@@ -20,18 +25,32 @@ import { ShoppingCartIcon } from '@heroicons/vue/24/solid'
           >Sneaker<span class="text-brand">snee</span>
         </a>
         <nav class="flex items-center gap-1 sm:gap-2">
+          <button
+            type="button"
+            @click="toggleTheme"
+            :title="
+              isDark
+                ? 'Switch to light mode (Shift + Alt + T)'
+                : 'Switch to dark mode (Shift + Alt + T)'
+            "
+            class="nav-link px-2.5"
+          >
+            <SunIcon v-if="isDark" class="size-5 text-amber-400" />
+            <MoonIcon v-else class="size-5" />
+          </button>
+          <div class="mx-1 h-5 w-px bg-zinc-200 dark:bg-zinc-800"></div>
           <!-- TODO: <a href="#">User</a> -->
           <a href="#" class="nav-link">
             <ClipboardDocumentListIcon class="size-5" />
-            <span class="hidden sm:inline">Orders</span>
+            <span class="sr-only sm:not-sr-only">Orders</span>
           </a>
           <a href="#" class="nav-link">
             <HeartIcon class="size-5" />
-            <span class="hidden sm:inline">Favorites</span>
+            <span class="sr-only sm:not-sr-only">Favorites</span>
           </a>
           <a href="#" class="nav-link">
             <ShoppingBagIcon class="size-5" />
-            <span class="hidden sm:inline">Cart</span>
+            <span class="sr-only sm:not-sr-only">Cart</span>
             <span
               class="bg-brand ml-0.5 rounded-full px-1.5 py-0.5 text-[0.6875rem] leading-none font-bold text-white"
               >2</span
@@ -67,7 +86,7 @@ import { ShoppingCartIcon } from '@heroicons/vue/24/solid'
     </header>
 
     <main class="section-px flex-1 py-8">
-      <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
         <article v-for="n in 8" :key="n" class="card-base group flex flex-col justify-between p-4">
           <div>
             <div
